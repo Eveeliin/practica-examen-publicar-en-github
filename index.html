@@ -25,21 +25,6 @@
         margin: 50px 0;
       }
 
-      .mascot::before {
-        content: "(°_°)";
-        animation: blink 4s infinite;
-      }
-
-      @keyframes blink {
-        0%, 90%, 100% { content: "(°_°)"; }
-        95% { content: "(−_−)"; }
-      }
-
-      .mascot:hover::before {
-        content: "(^_^)";
-        animation: happy 0.5s;
-      }
-
       .eye {
         position: absolute;
         font-size: 1.2rem;
@@ -56,11 +41,14 @@
     <h1>¡HALA MADRID!</h1>
     <footer>Este es el pie de página ~ Año 2005</footer>
 
-    <div class="mascot" id="mascot">
-      <div class="eye" id="eyeL">·</div>
-      <div class="eye" id="eyeR">·</div>
+    <div class="mascot" id="mascot" style="position:relative; width:120px; height:80px;">
+     <span style="position:absolute; left:0; top:30px; font-size:2rem;">(</span>
+     <div class="eye" id="eyeL" style="width:16px; height:16px; background:black; border-radius:50%; position:absolute; top:25px; left:35px;"></div>
+     <div class="eye" id="eyeR" style="width:16px; height:16px; background:black; border-radius:50%; position:absolute; top:25px; left:65px;"></div>
+     <div id="mouth" style="width:40px; height:3px; background:black; border-radius:2px; position:absolute; top:55px; left:50%; transform:translateX(-50%);"></div>
+     <span style="position:absolute; right:0; top:30px; font-size:2rem;">)</span>
     </div>
-
+    
     <script>
       const mascot = document.getElementById("mascot");
       const eyeL = document.getElementById("eyeL");
