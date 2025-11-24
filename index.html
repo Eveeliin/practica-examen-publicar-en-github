@@ -7,15 +7,43 @@
     <style>
       h1 {
         color: white;
-        background-color: green;
+        background-color: violet;
         border: 1px solid black;
       }
 
       p {
         color: aliceblue;
-        background-color: rgb(150, 44, 248);
+        background-color: violet;
         border: 3px black solid;
         font-size: 64;
+      }
+
+      .mascot {
+        font-size: 6rem;
+        position: relative;
+        cursor: pointer;
+        margin: 50px 0;
+      }
+
+      .mascot::before {
+        content: "(°_°)";
+        animation: blink 4s infinite;
+      }
+
+      @keyframes blink {
+        0%, 90%, 100% { content: "(°_°)"; }
+        95% { content: "(−_−)"; }
+      }
+
+      .mascot:hover::before {
+        content: "(^_^)";
+        animation: happy 0.5s;
+      }
+
+      .eye {
+        position: absolute;
+        font-size: 1.2rem;
+        pointer-events: none;
       }
     </style>
   </head>
@@ -25,6 +53,48 @@
 
     <h2>Subtítulo</h2>
     <p>Segundo elemento de parrafo</p>
-	<h1>¡HALA MADRID!</h1>
+
+    <h1>¡HALA MADRID!</h1>
+    <footer>Este es el pie de página ~ Año 2005</footer>
+
+    <div class="mascot" id="mascot">
+      <div class="eye" id="eyeL">·</div>
+      <div class="eye" id="eyeR">·</div>
+    </div>
+
+    <script>
+      const mascot = document.getElementById("mascot");
+      const eyeL = document.getElementById("eyeL");
+      const eyeR = document.getElementById("eyeR");
+
+      function updateEyePositions() {
+        const rect = mascot.getBoundingClientRect();
+        eyeL.style.left = rect.width * 0.28 + "px";
+        eyeL.style.top =  rect.height * 0.33 + "px";
+
+        eyeR.style.left = rect.width * 0.60 + "px";
+        eyeR.style.top =  rect.height * 0.33 + "px";
+      }
+
+      updateEyePositions();
+      window.addEventListener("resize", updateEyePositions);
+
+      document.addEventListener("mousemove", e => {
+        [eyeL, eyeR].forEach(eye => {
+          const rect = eye.getBoundingClientRect();
+          const eyeX = rect.left + rect.width / 2;
+          const eyeY = rect.top + rect.height / 2;
+
+          const dx = e.clientX - eyeX;
+          const dy = e.clientY - eyeY;
+
+          const dist = Math.min(Math.sqrt(dx*dx + dy*dy) / 25, 8);
+          const angle = Math.atan2(dy, dx);
+
+          eye.style.transform = 
+              `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px)`;
+        });
+      });
+    </script>
   </body>
 </html>
